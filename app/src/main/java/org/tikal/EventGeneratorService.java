@@ -1,4 +1,4 @@
-package org.tikal.bus;
+package org.tikal;
 
 import android.app.Service;
 import android.content.Intent;
@@ -6,8 +6,15 @@ import android.content.res.Configuration;
 import android.os.IBinder;
 import android.os.SystemClock;
 import android.provider.Settings;
+import android.util.Log;
 
 import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
+
+import org.tikal.bus.BusProvider;
+import org.tikal.bus.Command;
+import org.tikal.bus.LabelMessage;
+import org.tikal.bus.StartCommand;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -32,19 +39,45 @@ public class EventGeneratorService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        Log.d(getClass().getSimpleName(), "start service");
         serviceBus.register(this);
-        executor.execute(new SampleThread());
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        Log.d(getClass().getSimpleName(), "destroy service");
         serviceBus.unregister(this);
+     }
+
+    public void startSampleExecution(){
+        stopThread.set(false);
+        Log.d(getClass().getSimpleName(), "startSampleExecution");
+
+        executor.execute(new SampleThread());
+    }
+
+    public void stopSampleExecution(){
         stopThread.set(true);
     }
 
     private static final String[] messages = {"Red","Green","Blue","Yellow"};
 
+    @Subscribe public void commandLogger(Command command){
+        Log.d(getClass().getSimpleName(),"Command Received:"+command );
+
+    }
+    @Subscribe public void startReceived(StartCommand command){
+        Log.d(getClass().getSimpleName(),"Start Command Received:"+command );
+        startSampleExecution();
+
+    }
+    @Subscribe public void stopReceived(Command command){
+        Log.d(getClass().getSimpleName(),"Stop Command Received:"+command );
+        stopSampleExecution();
+
+    }
     private class SampleThread extends Thread{
         @Override
         public void run() {

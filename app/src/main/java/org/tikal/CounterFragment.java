@@ -7,103 +7,55 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
+
+import org.tikal.bus.BusProvider;
+import org.tikal.bus.LabelMessage;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link CounterFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link CounterFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class CounterFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private Bus uiBus;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    private OnFragmentInteractionListener mListener;
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CounterFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static CounterFragment newInstance(String param1, String param2) {
-        CounterFragment fragment = new CounterFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
+    private TextView counterTextView;
     public CounterFragment() {
-        // Required empty public constructor
-    }
+        this.uiBus = BusProvider.getUiBusInstance();
+     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_counter, container, false);
+        View result = inflater.inflate(R.layout.fragment_counter, container, false);
+        counterTextView = (TextView) result.findViewById(R.id.counter);
+        return result;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+    private int counter = 0;
+
+    @Subscribe public void answerAvailable(LabelMessage event) {
+        counter++;
+        counterTextView.setText("Event number #"+counter+" arrived");
     }
 
     @Override
     public void onAttach(Activity activity) {
+        uiBus.register(this);
         super.onAttach(activity);
-        try {
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
+     }
 
     @Override
     public void onDetach() {
+        uiBus.unregister(this);
         super.onDetach();
-        mListener = null;
-    }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
     }
-
 }

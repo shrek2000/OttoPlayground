@@ -18,7 +18,7 @@
         </activity>
 
         <service
-            android:name=".bus.EventGeneratorService"
+            android:name=".EventGeneratorService"
             android:enabled="true"
             android:exported="true" >
         </service>

@@ -3,14 +3,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+    <fragment android:id="@+id/label_fragment" xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:name="org.tikal.LabelFragment"/>
 
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+    <fragment android:id="@+id/counter_fragment" xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:name="org.tikal.CounterFragment"/>
 
 </LinearLayout>
