@@ -1,37 +1,45 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
     tools:context="org.tikal.LabelFragment">
 
-    <Button
-        android:id="@+id/start_service"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/start" />
 
-    <Button
-        android:id="@+id/stop_service"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/stop" />
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/label1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/counter_empty" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center_horizontal|top">
+        <Button
+            android:id="@+id/start_service"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/start" />
 
-    <TextView
-        android:id="@+id/label2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/counter_empty" />
+        <Button
+            android:id="@+id/stop_service"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/stop" />
+        <!-- TODO: Update blank fragment layout -->
+        <TextView
+            android:id="@+id/label1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/counter_empty" />
 
-    <TextView
-        android:id="@+id/label3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/counter_empty" />
+        <TextView
+            android:id="@+id/label2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/counter_empty" />
+
+        <TextView
+            android:id="@+id/label3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/counter_empty" />
+
+    </LinearLayout>
 
 </FrameLayout>
