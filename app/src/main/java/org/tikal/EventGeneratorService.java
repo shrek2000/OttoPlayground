@@ -2,13 +2,10 @@ package org.tikal;
 
 import android.app.Service;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.SystemClock;
-import android.provider.Settings;
 import android.util.Log;
 
 import com.squareup.otto.Bus;
@@ -66,7 +63,7 @@ public class EventGeneratorService extends Service {
         stopThread.set(true);
     }
 
-    private static final String[] messages = {"Red", "Green", "Blue", "Yellow"};
+    private static final String[] messages = {"Bla Bla", "Text", "Word", "Demo"};
 
     @Subscribe
     public void commandLogger(Command command) {
@@ -92,8 +89,9 @@ public class EventGeneratorService extends Service {
         @Override
         public void run() {
             while (true) {
-                for (int i = 0; i < 3; i++) {
-                    for (int j = 0; j < messages.length; j++) {
+                for (int j = 0; j < messages.length; j++) {
+                    for (int i = 0; i < 3; i++) {
+
                         if (stopThread.get()) {
                             return;
                         }

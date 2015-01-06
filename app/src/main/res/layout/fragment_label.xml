@@ -16,12 +16,7 @@
             android:layout_height="wrap_content"
             android:text="@string/start" />
 
-        <Button
-            android:id="@+id/stop_service"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/stop" />
-        <!-- TODO: Update blank fragment layout -->
+
         <TextView
             android:id="@+id/label1"
             android:layout_width="wrap_content"
