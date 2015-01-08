@@ -28,8 +28,6 @@ public class EventGeneratorService extends Service {
     private Bus uiBus;
 
     public EventGeneratorService() {
-        uiBus = BusProvider.getUiBusInstance();
-        serviceBus = BusProvider.getServiceBusInstance();
     }
 
     @Override
@@ -40,7 +38,9 @@ public class EventGeneratorService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        uiBus = BusProvider.getUiBusInstance();
+        serviceBus = BusProvider.getServiceBusInstance();
+        handler = new Handler(Looper.getMainLooper());
         Log.d(getClass().getSimpleName(), "start service");
         serviceBus.register(this);
     }
@@ -105,9 +105,9 @@ public class EventGeneratorService extends Service {
 
         }
     }
-
+    private Handler handler;
     private void postMessage(final int i, final int j) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
+        handler.post(new Runnable() {
             @Override
             public void run() {
                 uiBus.post(new LabelMessage(i, messages[j]));
